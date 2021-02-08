@@ -19,7 +19,7 @@ public class MyStringManipulator {
 		
 			//Ask user for command
 			System.out.println("Enter your command - (quit, print reverse, replace all, replace single, remove)");
-			userCommand = sc.next() + sc.nextLine(); 
+			userCommand = sc.nextLine(); 
 			
 			//Check that user wants to continue
 			if (userCommand.toLowerCase().equals("quit")) {
