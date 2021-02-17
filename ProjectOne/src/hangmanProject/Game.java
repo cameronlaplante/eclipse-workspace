@@ -13,7 +13,7 @@ public class Game {
 	int numSpaces;
 	String secretWord;
 	String solvedWord;
-	String tempSolvedWord;
+	//String tempSolvedWord; //only used in testing
 	
 	// game constructor
 	public Game(int tries, int spaces, String word) {
