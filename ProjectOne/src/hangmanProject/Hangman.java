@@ -35,7 +35,7 @@ public class Hangman {
 			// take user input for difficulty
 			System.out.println("Enter your difficulty: Easy (e), Intermediate (i), Hard (h)");
 			diffLevel = sc.nextLine();
-			diffLevel = diffLevel.substring(0, 0+1);
+			diffLevel = diffLevel.substring(0, 1);
 
 			// case statement for game difficulty
 			switch (diffLevel){
@@ -61,7 +61,7 @@ public class Hangman {
 			// print dashed word to screen
 			System.out.println("The word is: " + g.getSolvedWord());
 			
-			while (g.guesses() > 0 && win == false) {
+			while (g.guesses() > 0 && !win) {
 				
 				
 				// prompt user for guess and spaces
@@ -117,8 +117,7 @@ public class Hangman {
 					}
 					
 					// check that length of slots list equals parameters of difficulty level.
-					int numSpaces = g.getNumSpaces();
-					if (slotsList.size() != numSpaces ) {
+					if (slotsList.size() != g.getNumSpaces()) {
 						System.out.println("Your input is not valid. Try again.");
 						System.out.println("Guesses remaining: " + g.getNumTries());
 						continue;
