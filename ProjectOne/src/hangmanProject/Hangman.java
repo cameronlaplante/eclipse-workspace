@@ -32,6 +32,8 @@ public class Hangman {
 		
 		while (run == true) {
 			
+			//reset win variable to false
+			win = false;
 			// take user input for difficulty
 			System.out.println("Enter your difficulty: Easy (e), Intermediate (i), Hard (h)");
 			diffLevel = sc.nextLine();
