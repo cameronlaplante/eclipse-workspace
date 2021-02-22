@@ -79,16 +79,21 @@ public class IntegerLinkedList {
 	public void removeBack() {
 		IntegerNode cur = head;
 		
+		//if head or its successor are null, return
 		if (head == null) {
 			return;
 		}
 		else if (head.getNext() == null) {
+			head = null;
 			return;
 		}
 		else {
+			//while next's successor is not null
 			while (cur.getNext().getNext() != null) { 
+				// set to successor
 				cur = cur.getNext();
 			}
+			// set to null
 			cur.setNext(null);
 		}
 	}
@@ -115,27 +120,11 @@ public class IntegerLinkedList {
 		
 		// if length of list is exceeded, return
 		if (cur == null || cur.getNext() == null) {
+			System.out.println("Index Out of Bounds.");
 			return;
 		}
 		IntegerNode next = cur.getNext().getNext();
 		cur.setNext(next);
 		
-		
-//		IntegerNode cur = head, prev = null;
-//		
-//		if (cur != null && cur.getValue() == index) {
-//			head = cur.getNext();
-//			return;
-//		}
-//		
-//		while(cur != null && cur.getValue() != index) { 
-//			prev = cur;
-//			cur = cur.getNext();
-//		}
-//		
-//		
 	}
-	
-	
-	
 }
