@@ -1,5 +1,17 @@
 package lab5;
 
+/*----------------------------------------------------------
+ * author: Cameron LaPlante
+ * course: CSCI 145
+ * project: Lab5
+ * Collaboration statement: By submitting this assignment,
+ * I am attesting that this homework is in full compliance
+ * with the course's Homework Collaboration Policy and with
+ * all the other relevant academic honesty policies of the
+ * course and university. I discussed this homework with no 
+ * one and wrote this solution without input from anyone else.
+ *------------------------------------------------------------*/
+
 public class IntegerLinkedList {
 
 	private IntegerNode head;
