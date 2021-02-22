@@ -3,7 +3,6 @@ package lab5;
 public class IntegerLinkedList {
 
 	private IntegerNode head;
-	private IntegerNode next;
 	
 	// isEmpty - 
 	public boolean isEmpty() {
