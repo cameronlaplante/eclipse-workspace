@@ -114,13 +114,11 @@ public class IntegerLinkedList {
 			cur = cur.getNext();
 		}
 		
-		//
+		// if length of list is exceeded, return
 		if (cur == null || cur.getNext() == null) {
 			return;
 		}
-		
 		IntegerNode next = cur.getNext().getNext();
-		
 		cur.setNext(next);
 		
 		
