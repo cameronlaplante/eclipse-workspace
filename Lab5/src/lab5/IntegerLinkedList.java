@@ -3,6 +3,7 @@ package lab5;
 public class IntegerLinkedList {
 
 	private IntegerNode head;
+	private IntegerNode next;
 	
 	// isEmpty - 
 	public boolean isEmpty() {
@@ -95,19 +96,47 @@ public class IntegerLinkedList {
 	
 	//removeAt - remove node at specified index. 
 	public void removeAt(int index) {
-		IntegerNode cur = head, prev = null;
+		IntegerNode cur = head;
 		
-		if (cur != null && cur.getValue() == index) {
+		// if head is null, return
+		if (head == null) {
+			return;
+		}
+		
+		// if index is zero, remove head. 
+		if (index == 0) {
 			head = cur.getNext();
 			return;
 		}
 		
-		while(cur != null && cur.getValue() != index) { 
-			prev = cur;
+		// find node prior to one being deleted. 
+		for (int i=0; cur != null && i < index - 1; i++) {
 			cur = cur.getNext();
 		}
 		
+		//
+		if (cur == null || cur.getNext() == null) {
+			return;
+		}
 		
+		IntegerNode next = cur.getNext().getNext();
+		
+		cur.setNext(next);
+		
+		
+//		IntegerNode cur = head, prev = null;
+//		
+//		if (cur != null && cur.getValue() == index) {
+//			head = cur.getNext();
+//			return;
+//		}
+//		
+//		while(cur != null && cur.getValue() != index) { 
+//			prev = cur;
+//			cur = cur.getNext();
+//		}
+//		
+//		
 	}
 	
 	

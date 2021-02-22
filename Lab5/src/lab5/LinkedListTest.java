@@ -17,14 +17,17 @@ public class LinkedListTest {
 		myList.insertFront(9);
 		myList.print();
 		
-		myList.removeFront();
+//		myList.removeFront();
+//		myList.print();
+//		
+//		myList.removeBack();
+//		myList.print();
+		
+		myList.removeAt(2);
 		myList.print();
 		
-		myList.removeBack();
-		myList.print();
-		
-		int test = myList.get(0);
-		System.out.println(test);
+//		int test = myList.get(0);
+//		System.out.println(test);
 
 	}
 	
