@@ -16,7 +16,7 @@ public class IntegerLinkedList {
 
 	private IntegerNode head;
 	
-	// isEmpty - 
+	// isEmpty 
 	public boolean isEmpty() {
 		return head == null;
 	}
@@ -32,12 +32,13 @@ public class IntegerLinkedList {
 	public void insertBack(int val) {
 		IntegerNode node = new IntegerNode(val);
 		
+		// check if list is currently empty
 		if(isEmpty()) {
 			head = node;
 		}
 		else {
 			IntegerNode cur = head;
-			
+			// while cur is not the last node in the list
 			while(cur.getNext() != null) {
 				// update cur to point to its successor
 				cur = cur.getNext();
@@ -56,7 +57,6 @@ public class IntegerLinkedList {
 			System.out.printf("%d", cur.getValue());
 			// update cur to point to its successor
 			cur = cur.getNext();
-			
 		}
 		System.out.println();
 	}
@@ -82,6 +82,7 @@ public class IntegerLinkedList {
 	public void removeFront() {
 		IntegerNode cur = head;
 		
+		//as long as head isn't null, set head to successor
 		if (head != null) {
 			head = cur.getNext();
 		}
@@ -119,7 +120,7 @@ public class IntegerLinkedList {
 			return;
 		}
 		
-		// if index is zero, remove head. 
+		// if index is zero, update head. 
 		if (index == 0) {
 			head = cur.getNext();
 			return;
