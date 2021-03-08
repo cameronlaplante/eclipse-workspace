@@ -8,8 +8,9 @@ public class QStack {
 	//create queue
 	Queue<Integer> myQueue = new LinkedList<Integer>();
 
-	
+	//---------------------------------------
 	// push new element to queue. 
+	//---------------------------------------
 	public void push(int x) {
 		
 		int size = myQueue.size();
@@ -24,7 +25,9 @@ public class QStack {
 		}
 	}
 	
+	//---------------------------------------
 	//pop top element. 
+	//---------------------------------------
 	public int pop() {
 		
 		//if empty, print to screen
@@ -36,7 +39,9 @@ public class QStack {
 		return x;
 	}
 	
+	//---------------------------------------
 	// return top element (do not remove)
+	//---------------------------------------
 	public int top() {
 		
 		//check if empty
@@ -49,12 +54,16 @@ public class QStack {
 		return z;
 	}
 	
+	//---------------------------------------
 	//return size of myQueue.
+	//---------------------------------------
 	public int size() {
 		return myQueue.size();
 	}
 	
+	//---------------------------------------
 	//check if myQueue is empty
+	//---------------------------------------
 	public boolean isEmpty() {
 	
 		//if empty return true. otherwise false. 

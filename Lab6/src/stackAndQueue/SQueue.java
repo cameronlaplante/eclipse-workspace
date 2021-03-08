@@ -7,9 +7,12 @@ public class SQueue {
 	//create stack
 	Stack<Integer> myStack = new Stack<Integer>();
 	
+	//---------------------------------------
 	//add element to stack
+	//---------------------------------------
 	public void add(int x) {
 		
+		//assign variable to size of myStack
 		int size = myStack.size();
 		
 		//add new element to myStack
@@ -22,7 +25,9 @@ public class SQueue {
 		}
 	}
 	
+	//---------------------------------------
 	//remove top element
+	//---------------------------------------
 	public int remove() {
 		
 		//if empty, print to screen
@@ -35,7 +40,9 @@ public class SQueue {
 		return x;	
 	}
 	
+	//---------------------------------------
 	//get top element with peek (do not remove)
+	//---------------------------------------
 	public int peek() {
 		
 		//check if empty
@@ -48,12 +55,16 @@ public class SQueue {
 		return z;
 	}
 	
+	//---------------------------------------
 	//return size of myStack
+	//---------------------------------------
 	public int size() {
 		return myStack.size();
 	}
 	
+	//---------------------------------------
 	//check if myStack is empty
+	//---------------------------------------
 	public boolean isEmpty() {
 		//if empty return true. otherwise false. 
 			if (myStack.isEmpty()){

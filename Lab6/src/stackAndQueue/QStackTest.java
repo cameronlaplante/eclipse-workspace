@@ -21,7 +21,7 @@ public class QStackTest {
 		stack1.pop();
 		
 		System.out.println("Case1 Top: " + stack1.top());
-		
+
 		
 		//case2
 		System.out.println("--------------------");
