@@ -50,9 +50,7 @@ public class QStackTest {
 		stack3.pop();
 		
 		System.out.println("Case3 Top: " + stack3.top());
-		
 		System.out.println("Case3 Empty: " + stack3.isEmpty());
-		
 		
 	}
 	

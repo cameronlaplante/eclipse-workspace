@@ -40,9 +40,9 @@ public class SQueueTest {
 	
 	SQueue Queue3 = new SQueue();
 	
-	Queue3.add(3);
-	Queue3.add(6);
-	Queue3.add(9);
+//	Queue3.add(3);
+//	Queue3.add(6);
+//	Queue3.add(9);
 	
 	Queue3.remove();
 	
