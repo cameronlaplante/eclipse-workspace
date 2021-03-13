@@ -131,8 +131,8 @@ public class Sudoku {
 		char charCur = stringCur.toCharArray()[0];
 		for(int i=0; i < puzzle.length; i++) {
 			
-			char c = puzzle[i][col];
-			if(c == charCur) {
+//			char c = puzzle[i][col];  can be deleted. used to see variable when debugging
+			if(puzzle[i][col] == charCur) {
 				return true;
 			}
 		}
@@ -142,21 +142,32 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	// checks if specific num is in 3X3
 	// ---------------------------------------------------------------
-	public static boolean curInGrid (int row, int col, int cur) {
+	public static boolean curInGrid (int row1, int col1, int cur) {
 		
-		int curRow = row - row%3;
-		int curCol = col - col%3;
-		
-		for(int i = curRow; i < curRow + 3; i++) {
-			for(int j = curCol; j < curCol + 3; j++) {
-				
-				String stringCur = "" + cur;
-				if(puzzle[i][j] == stringCur.toCharArray()[0]) {
+		for(int row = 0; row < 3; row++) {
+			for(int col = 0; col < 3; col++) {
+				if(puzzle[(row + row1)][(col + col1)] == cur) {
 					return true;
 				}
 			}
 		}
 		return false;
+	
+		
+		
+//		int curRow = row - row%3;
+//		int curCol = col - col%3;
+//		
+//		for(int i = curRow; i < curRow + 3; i++) {
+//			for(int j = curCol; j < curCol + 3; j++) {
+//				
+//				String stringCur = "" + cur;
+//				if(puzzle[i][j] == stringCur.toCharArray()[0]) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
 	}
 	
 	// ---------------------------------------------------------------
@@ -189,15 +200,15 @@ public class Sudoku {
 	//---------------------------------------------------------------
 	// return next empty slot in puzzle
 	//---------------------------------------------------------------
-	public static int[] emptySlot(char[][] puzzle2) {
+	public static int[] emptySlot(char[][] puzzle) {
 		int[] fp = new int[2];
 		
 		fp[0] = -1;
 		fp[1] = -1;
 		
-		for(int row = 0; row < puzzle2.length; row++) {
-			for (int col = 0; col < puzzle2.length; col++) {
-				if (puzzle2[row][col] == '.') {
+		for(int row = 0; row < puzzle.length; row++) {
+			for (int col = 0; col < puzzle.length; col++) {
+				if (puzzle[row][col] == '.') {
 					fp[0] = row;
 					fp[1] = col;
 					return fp;
@@ -231,13 +242,13 @@ public class Sudoku {
 				puzzle[row][col] = stringNum.toCharArray()[0];
 				
 				printPuzzle(puzzle); //TEMP FOR TESTING
-				System.out.println("----------");
+				System.out.println("-----------------");
 				
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
 				}
-				puzzle[row][col] = ',';
+				puzzle[row][col] = '.';
 				printPuzzle(puzzle);
 				
 //				System.out.println(puzzle[row][col]);
