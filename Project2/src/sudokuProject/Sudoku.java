@@ -229,11 +229,16 @@ public class Sudoku {
 			if (satisfied) {
 				String stringNum = Integer.toString(num);
 				puzzle[row][col] = stringNum.toCharArray()[0];
+				
+				printPuzzle(puzzle); //TEMP FOR TESTING
+				System.out.println("----------");
+				
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
 				}
-				puzzle[row][col] = 0;
+				puzzle[row][col] = ',';
+				printPuzzle(puzzle);
 				
 //				System.out.println(puzzle[row][col]);
 //				System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
@@ -265,7 +270,6 @@ public class Sudoku {
 		
 		System.out.println("Starting Board: ");
 		printPuzzle(puzzle);
-		System.out.println();
 		System.out.println();
 		
 //		boolean rowTrue = curInRow(1, 1);
