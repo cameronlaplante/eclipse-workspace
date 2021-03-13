@@ -3,7 +3,7 @@ package sudokuProject;
 public class Sudoku {
 	
 	//set length of one side to static variable. 
-	static int length = 9;
+//	static int length = 9;
 	
 	//generate puzzle to solve
 	static char[][] puzzle = SudokuP.puzzle();
@@ -108,7 +108,7 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	// checks if specific num is in row
 	// ---------------------------------------------------------------
-	public static boolean curInRow(int row, int cur) {
+	public static boolean curInRow(char[][] puzzle, int row, int cur) {
 		
 //		System.out.println("current val: " + cur);
 
@@ -126,7 +126,7 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	// checks if specific num is in colum
 	// ---------------------------------------------------------------
-	public static boolean curInCol(int col, int cur) {
+	public static boolean curInCol(char[][] puzzle, int col, int cur) {
 		String stringCur = Integer.toString(cur);
 		char charCur = stringCur.toCharArray()[0];
 		for(int i=0; i < puzzle.length; i++) {
@@ -142,58 +142,49 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	// checks if specific num is in 3X3
 	// ---------------------------------------------------------------
-	public static boolean curInGrid (int row1, int col1, int cur) {
+	public static boolean curInGrid (char[][] puzzle, int row1, int col1, int cur) {
 		
 		for(int row = 0; row < 3; row++) {
 			for(int col = 0; col < 3; col++) {
-				if(puzzle[(row + row1)][(col + col1)] == cur) {
+				
+				if(puzzle[row + row1][col + col1] == cur) {
 					return true;
 				}
 			}
 		}
 		return false;
-	
-		
-		
-//		int curRow = row - row%3;
-//		int curCol = col - col%3;
-//		
-//		for(int i = curRow; i < curRow + 3; i++) {
-//			for(int j = curCol; j < curCol + 3; j++) {
-//				
-//				String stringCur = "" + cur;
-//				if(puzzle[i][j] == stringCur.toCharArray()[0]) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
 	}
 	
 	// ---------------------------------------------------------------
 	// determines if specific number satisfies conditions in index
 	// ---------------------------------------------------------------
-	public static boolean satisfies(int row, int col, int cur) {
+	public static boolean satisfies(char[][] puzzle, int row, int col, int cur) {
 		
-		boolean rowTrue = curInRow(row, cur);
-		boolean colTrue = curInCol(row, cur);
-		boolean gridTrue =curInGrid(row, col, cur);
+		boolean rowTrue = curInRow(puzzle, row, cur);
+		boolean colTrue = curInCol(puzzle, row, cur);
+		boolean gridTrue =curInGrid(puzzle, row - row % 3, col - col % 3, cur);
+		
+		//trying diff return method. 
+		return (!colTrue && !rowTrue && !gridTrue);
 		
 //		System.out.println("row true: "+rowTrue);
 //		System.out.println("col true: "+colTrue);
 //		System.out.println("grid true:"+gridTrue);
 //		System.out.println("_______");
 		
-		if (rowTrue){
-			return false;
-		}
-		if (colTrue){
-			return false;
-		}
-		if (gridTrue){
-			return false;
-		}
-		return true;
+		
+		//original return method
+		
+//		if (rowTrue){
+//			return false;
+//		}
+//		if (colTrue){
+//			return false;
+//		}
+//		if (gridTrue){
+//			return false;
+//		}
+//		return true;
 		
 	}
 	
@@ -223,8 +214,7 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	public static boolean solve(char[][] puzzle) {
 		
-		boolean satisfied = false;
-		
+//		boolean satisfied = false;
 		int[] fp = emptySlot(puzzle);
 		if (fp[0] == -1) {
 			return true;
@@ -236,29 +226,30 @@ public class Sudoku {
 		//check each possible number (1-9)
 		for (int num = 1; num <= 9; num++) {
 //			System.out.println("Satisfies: " + satisfies(row, col, num));
-			satisfied = satisfies(row, col, num);
-			if (satisfied) {
+//			satisfied = satisfies(row, col, num);
+			if (satisfies(puzzle, row, col, num)) {
 				String stringNum = Integer.toString(num);
+				
 				puzzle[row][col] = stringNum.toCharArray()[0];
 				
-				printPuzzle(puzzle); //TEMP FOR TESTING
+				
+				//TEMP FOR TESTING
+				printPuzzle(puzzle); 
 				System.out.println("-----------------");
+				//^^TEMP FOR TESTING
+				
 				
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
 				}
-				puzzle[row][col] = '.';
-				printPuzzle(puzzle);
+				puzzle[row][col] = '-';
+//				printPuzzle(puzzle);
 				
 //				System.out.println(puzzle[row][col]);
 //				System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
 			}
 		}
-//		if (!satisfied) {
-//			puzzle[row][col] = '-';
-//		}
-//			System.out.println(" ");
 		return false;
 	}
 	
@@ -266,9 +257,9 @@ public class Sudoku {
 	// prints puzzle to screen in current state. 
 	// ---------------------------------------------------------------
 	private static void printPuzzle(char[][] puzzle) {
-		for (int row = 0; row < length; row++) {
-			for (int col = 0; col < length; col++) {
-				System.out.print(puzzle[row][col] + " ");
+		for (int row = 0; row < puzzle.length; row++) {
+			for (int col = 0; col < puzzle.length; col++) {
+				System.out.print(" " + puzzle[row][col] + " ");
 			}
 			System.out.println();
 		}
@@ -291,7 +282,5 @@ public class Sudoku {
 			System.out.println("Solved Puzzle: ");
 			printPuzzle(puzzle);
 		}
-
 	}
-	
 }
