@@ -127,12 +127,12 @@ public class Sudoku {
 	// checks if specific num is in colum
 	// ---------------------------------------------------------------
 	public static boolean curInCol(char[][] puzzle, int col, int cur) {
+		
 		String stringCur = Integer.toString(cur);
-		char charCur = stringCur.toCharArray()[0];
 		for(int i=0; i < puzzle.length; i++) {
 			
 //			char c = puzzle[i][col];  can be deleted. used to see variable when debugging
-			if(puzzle[i][col] == charCur) {
+			if(puzzle[i][col] == stringCur.toCharArray()[0]) {
 				return true;
 			}
 		}
@@ -161,7 +161,7 @@ public class Sudoku {
 	public static boolean satisfies(char[][] puzzle, int row, int col, int cur) {
 		
 		boolean rowTrue = curInRow(puzzle, row, cur);
-		boolean colTrue = curInCol(puzzle, row, cur);
+		boolean colTrue = curInCol(puzzle, col, cur);
 		boolean gridTrue =curInGrid(puzzle, row - row % 3, col - col % 3, cur);
 		
 		//trying diff return method. 
@@ -234,8 +234,8 @@ public class Sudoku {
 				
 				
 				//TEMP FOR TESTING
-				printPuzzle(puzzle); 
-				System.out.println("-----------------");
+//				printPuzzle(puzzle); 
+//				System.out.println("-----------------");
 				//^^TEMP FOR TESTING
 				
 				
@@ -243,7 +243,7 @@ public class Sudoku {
 				if(check == true) {
 					return true;
 				}
-				puzzle[row][col] = '-';
+				puzzle[row][col] = '.';
 //				printPuzzle(puzzle);
 				
 //				System.out.println(puzzle[row][col]);
