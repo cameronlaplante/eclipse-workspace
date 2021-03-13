@@ -14,19 +14,12 @@ public class Sudoku {
 	private static boolean arrayDupe(char[] dupe) {
 		
 		for(int j = 0; j < dupe.length; j++) {
-			
-//			System.out.println("------");
-		
 			for(int k = 0; k < dupe.length; k++) {
-				
-//				if (j != k) {
-//					System.out.print("dupe j and k values: " + dupe[j] + " " + dupe[k] + "\n");
-//				}
 				if(k!=j && (int) dupe[k] == (int) dupe[j]) {
 					if (dupe[j] == '.' && dupe[k] == '.') {
 						continue;
 					}
-					System.out.println("comparison (j,k): " + "j: " + j + " k: "+ k + " ( " + dupe[j] + " ) ( " + dupe[k] + " )");
+//					System.out.println("comparison (j,k): " + "j: " + j + " k: "+ k + " ( " + dupe[j] + " ) ( " + dupe[k] + " )");
 					return true;
 				}
 			}
@@ -57,17 +50,9 @@ public class Sudoku {
 	
 		//column check
 		for(int col = 0; col < puzzle.length; col++) {
-			
-			//iterate over every element in given column
-//			System.out.println("puzzle[row][" + col + "]: ");
 			for (int row = 0; row < puzzle.length; row++) {
-//				System.out.print(puzzle[row][col]+ "\n");
-				colDupe[row] = puzzle[row][col];
-				
+				colDupe[row] = puzzle[row][col];	
 			}
-//			System.out.println("Values of colDupe: ");
-//			System.out.println(colDupe);
-			
 			boolean duplicate = arrayDupe(colDupe);
 			
 			if(duplicate) {
@@ -81,40 +66,34 @@ public class Sudoku {
 			for( int gridY = 0; gridY < 7; gridY += 3) {
 				
 				char[] gridDupe = new char[9];
-		
 				int count = 0;
+				
 				for(int col = gridX; col < (3 + gridX); col++) {
-					
 					for(int row = gridY; row < (3 + gridY); row++) {
-		
 						char curPuzzleIndex = puzzle[row][col];
 						gridDupe[count] = curPuzzleIndex;
-
 						count++;
 					}
 				}
 				
 				boolean duplicate = arrayDupe(gridDupe);
-				
 				if(duplicate) {
 					System.out.println("duplicate found in grid");
 					return false;
 				}
 			}
 		}
-		//if all return true -> return true overall.
 		return true;	
 	}
+	
+	
 	// ---------------------------------------------------------------
 	// checks if specific num is in row
 	// ---------------------------------------------------------------
 	public static boolean curInRow(char[][] puzzle, int row, int cur) {
-		
-//		System.out.println("current val: " + cur);
 
 		String stringCur = Integer.toString(cur);
 		for(int i=0; i < puzzle.length; i++) {
-//			System.out.println("current index val: " + puzzle[row][i]);
 			
 			if(puzzle[row][i] ==  stringCur.toCharArray()[0]) {
 				return true;
@@ -130,8 +109,7 @@ public class Sudoku {
 		
 		String stringCur = Integer.toString(cur);
 		for(int i=0; i < puzzle.length; i++) {
-			
-//			char c = puzzle[i][col];  can be deleted. used to see variable when debugging
+	
 			if(puzzle[i][col] == stringCur.toCharArray()[0]) {
 				return true;
 			}
@@ -164,27 +142,7 @@ public class Sudoku {
 		boolean colTrue = curInCol(puzzle, col, cur);
 		boolean gridTrue =curInGrid(puzzle, row - row % 3, col - col % 3, cur);
 		
-		//trying diff return method. 
 		return (!colTrue && !rowTrue && !gridTrue);
-		
-//		System.out.println("row true: "+rowTrue);
-//		System.out.println("col true: "+colTrue);
-//		System.out.println("grid true:"+gridTrue);
-//		System.out.println("_______");
-		
-		
-		//original return method
-		
-//		if (rowTrue){
-//			return false;
-//		}
-//		if (colTrue){
-//			return false;
-//		}
-//		if (gridTrue){
-//			return false;
-//		}
-//		return true;
 		
 	}
 	
@@ -225,29 +183,22 @@ public class Sudoku {
 
 		//check each possible number (1-9)
 		for (int num = 1; num <= 9; num++) {
-//			System.out.println("Satisfies: " + satisfies(row, col, num));
-//			satisfied = satisfies(row, col, num);
+
 			if (satisfies(puzzle, row, col, num)) {
 				String stringNum = Integer.toString(num);
 				
 				puzzle[row][col] = stringNum.toCharArray()[0];
 				
-				
 				//TEMP FOR TESTING
 //				printPuzzle(puzzle); 
 //				System.out.println("-----------------");
-				//^^TEMP FOR TESTING
-				
+				//TEMP FOR TESTING ^^
 				
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
 				}
 				puzzle[row][col] = '.';
-//				printPuzzle(puzzle);
-				
-//				System.out.println(puzzle[row][col]);
-//				System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
 			}
 		}
 		return false;
@@ -273,9 +224,6 @@ public class Sudoku {
 		System.out.println("Starting Board: ");
 		printPuzzle(puzzle);
 		System.out.println();
-		
-//		boolean rowTrue = curInRow(1, 1);
-//		System.out.println("first num of first row equals 1: " + rowTrue);
 		
 		if(check(puzzle)) {
 			solve(puzzle);
