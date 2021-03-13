@@ -10,6 +10,30 @@ public class Sudoku {
 	//generate puzzle to solve
 	static char[][] puzzle = SudokuP.puzzle();
 	
+	//check for duplicates
+	private static boolean arrayDupe(char[] dupe) {
+		
+		for(int j = 0; j < dupe.length; j++) {
+			
+//			System.out.println("------");
+		
+			for(int k = 0; k < dupe.length; k++) {
+				
+//				if (j != k) {
+//					System.out.print("dupe j and k values: " + dupe[j] + " " + dupe[k] + "\n");
+//				}
+				if(k!=j && (int) dupe[k] == (int) dupe[j]) {
+					if (dupe[j] == '.' && dupe[k] == '.') {
+						continue;
+					}
+					System.out.println("comparison (j,k): " + "j: " + j + " k: "+ k + " ( " + dupe[j] + " ) ( " + dupe[k] + " )");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	
 	// ---------------------------------------------------------------
 	// checks validity of entire puzzle in current state (solved or unsolved)
@@ -17,76 +41,82 @@ public class Sudoku {
 	public static boolean check(char[][] puzzle) {
 		
 		//create boolean array to return whether a duplicate exists in row/column/grid
-		boolean[] noDuplicate = new boolean[length+1];
+		
+		char[] colDupe = new char[9];
 		
 		//row check
-		for(int i = 0; i < length; i++) {
+		for(int i = 0; i < puzzle.length-1; i++) {
 			
-			//set to false before iteration
-			Arrays.fill(noDuplicate, false);
-			//iterate over each element in given row
-			for (int j = 0; j < length; j++) {
-				//var to hold current value at specified index. 
-				int val = puzzle[i][j];
-				//check if duplicates found
-				if (noDuplicate[val]) {
-					return false;
-				}
-				noDuplicate[val] = true;
+			boolean duplicate = arrayDupe(puzzle[i]);
+			
+			if(duplicate) {
+				System.out.println("duplicate found on row: " + i);
+				return false;
 			}
 		}
-		
+	
 		//column check
-		for(int i = 0; i < length; i++) {
-			//set to false before iteration
-			Arrays.fill(noDuplicate, false);
+		for(int col = 0; col < puzzle.length; col++) {
+			
 			//iterate over every element in given column
-			for (int j = 0; j < length; j++) {
-				//var to hold current value at specified index.
-				int val = puzzle[j][i];
-				//check if duplicates found
-				if (noDuplicate[val]) {
-						return false;
-				}
-				noDuplicate[val] = true;
+//			System.out.println("puzzle[row][" + col + "]: ");
+			for (int row = 0; row < puzzle.length; row++) {
+//				System.out.print(puzzle[row][col]+ "\n");
+				colDupe[row] = puzzle[row][col];
+				
+			}
+//			System.out.println("Values of colDupe: ");
+//			System.out.println(colDupe);
+			
+			boolean duplicate = arrayDupe(colDupe);
+			
+			if(duplicate) {
+				System.out.println("duplicate found on col: " + col);
+				return false;
 			}
 		}
 		
 		//3X3 check (one at a time)
-		for(int i = 0; i < length-2; i += 3) {
-			for(int j = 0; j < length-2; j += 3) {
-				//set to false before iteration
-				Arrays.fill(noDuplicate, false);
-				//current 3X3
-				for(int a = 0; a < 3; a++) {
-					for(int b = 0; b < 3; b++) {
-						
-						//vars to hold current position at specified indexes
-						int curRow = i + a;
-						int curCol = j + b;
-						
-						//var to hold current value of specified position
-						int val = puzzle[curRow][curCol];
-						
-						//check if duplicates found
-						if (noDuplicate[val]) {
-							return false;
-						}
-						noDuplicate[val] = true;
+		for(int gridX = 0; gridX < 7; gridX += 3 ) {
+			for( int gridY = 0; gridY < 7; gridY += 3) {
+				
+				char[] gridDupe = new char[9];
+		
+				int count = 0;
+				for(int col = gridX; col < (3 + gridX); col++) {
+					
+					for(int row = gridY; row < (3 + gridY); row++) {
+		
+						char curPuzzleIndex = puzzle[row][col];
+						gridDupe[count] = curPuzzleIndex;
+
+						count++;
 					}
+				}
+				
+				boolean duplicate = arrayDupe(gridDupe);
+				
+				if(duplicate) {
+					System.out.println("duplicate found in grid");
+					return false;
 				}
 			}
 		}
 		//if all return true -> return true overall.
 		return true;	
 	}
-	
 	// ---------------------------------------------------------------
 	// checks if specific num is in row
 	// ---------------------------------------------------------------
 	public static boolean curInRow(int row, int cur) {
-		for(int i=0; i < length; i++) {
-			if(puzzle[row][i] == cur) {
+		
+//		System.out.println("current val: " + cur);
+
+		String stringCur = Integer.toString(cur);
+		for(int i=0; i < puzzle.length; i++) {
+//			System.out.println("current index val: " + puzzle[row][i]);
+			
+			if(puzzle[row][i] ==  stringCur.toCharArray()[0]) {
 				return true;
 			}
 		}
@@ -97,8 +127,12 @@ public class Sudoku {
 	// checks if specific num is in colum
 	// ---------------------------------------------------------------
 	public static boolean curInCol(int col, int cur) {
-		for(int i=0; i < length; i++) {
-			if(puzzle[i][col] == cur) {
+		String stringCur = Integer.toString(cur);
+		char charCur = stringCur.toCharArray()[0];
+		for(int i=0; i < puzzle.length; i++) {
+			
+			char c = puzzle[i][col];
+			if(c == charCur) {
 				return true;
 			}
 		}
@@ -115,7 +149,9 @@ public class Sudoku {
 		
 		for(int i = curRow; i < curRow + 3; i++) {
 			for(int j = curCol; j < curCol + 3; j++) {
-				if(puzzle[i][j] == cur) {
+				
+				String stringCur = "" + cur;
+				if(puzzle[i][j] == stringCur.toCharArray()[0]) {
 					return true;
 				}
 			}
@@ -128,14 +164,26 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	public static boolean satisfies(int row, int col, int cur) {
 		
-		return !(curInRow(row, cur) || curInCol(col, cur) || curInGrid(row, col, cur));
+		boolean rowTrue = curInRow(row, cur);
+		boolean colTrue = curInCol(row, cur);
+		boolean gridTrue =curInGrid(row, col, cur);
 		
-//		if (!curInRow(row, cur) || !curInCol(col, cur) || !curInGrid(row, col, cur)){
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}
+//		System.out.println("row true: "+rowTrue);
+//		System.out.println("col true: "+colTrue);
+//		System.out.println("grid true:"+gridTrue);
+//		System.out.println("_______");
+		
+		if (rowTrue){
+			return false;
+		}
+		if (colTrue){
+			return false;
+		}
+		if (gridTrue){
+			return false;
+		}
+		return true;
+		
 	}
 	
 	
@@ -144,30 +192,40 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	public static boolean solve(char[][] puzzle) {
 		
+		boolean satisfied = false;
+		
 		//traverse each element in each row
-		for (int row = 0; row <= 9; row++ ) {
-			for (int col = 0; col <= 9; col++) {
+		for (int row = 0; row < 9; row++ ) {
+			System.out.println(" ");
+			for (int col = 0; col < 9; col++) {
 				
 				//if the specified index is empty, solve it.
+//				System.out.print(puzzle[row][col]);
 				if (puzzle[row][col] == '.') {
 					//check each possible number (1-9)
 					for (int num = 1; num <= 9; num++) {
 						
-						if (satisfies(row, col, num)) {
-							puzzle[row][col] = (char) num;
-							
-							if (solve(puzzle)) {
-								return true;
-							}
-							else {
-								puzzle[row][col] = '.';
-							}
+//						System.out.println("Satisfies: " + satisfies(row, col, num));
+						
+						satisfied = satisfies(row, col, num);
+						if (satisfied) {
+							String stringNum = "" + num;
+							puzzle[row][col] = stringNum.toCharArray()[0];
+							printPuzzle(puzzle);
+							System.out.println(" ");
+//							System.out.println(puzzle[row][col]);
+//							System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
+							break;
 						}
 					}
-					return false;
+					if (!satisfied) {
+						puzzle[row][col] = '-';
+					}
 				}
 			}
 		}
+		
+		System.out.println(" ");
 		return true;
 	}
 	
@@ -193,11 +251,14 @@ public class Sudoku {
 		System.out.println();
 		System.out.println();
 		
-//		boolean valid = check(puzzle);
-//		System.out.println(valid);
+//		boolean rowTrue = curInRow(1, 1);
+//		System.out.println("first num of first row equals 1: " + rowTrue);
 		
-		solve(puzzle);
-		printPuzzle(puzzle);
+		if(check(puzzle)) {
+			solve(puzzle);
+			System.out.println("Solved Puzzle: ");
+			printPuzzle(puzzle);
+		}
 
 	}
 	
