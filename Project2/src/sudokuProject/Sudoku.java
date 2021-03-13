@@ -1,7 +1,5 @@
 package sudokuProject;
 
-import java.util.Arrays;
-
 public class Sudoku {
 	
 	//set length of one side to static variable. 
@@ -10,7 +8,9 @@ public class Sudoku {
 	//generate puzzle to solve
 	static char[][] puzzle = SudokuP.puzzle();
 	
-	//check for duplicates
+	// ---------------------------------------------------------------
+	// check for duplicates
+	// ---------------------------------------------------------------
 	private static boolean arrayDupe(char[] dupe) {
 		
 		for(int j = 0; j < dupe.length; j++) {
