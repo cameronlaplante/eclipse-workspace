@@ -186,6 +186,26 @@ public class Sudoku {
 		
 	}
 	
+	//---------------------------------------------------------------
+	// return next empty slot in puzzle
+	//---------------------------------------------------------------
+	public static int[] emptySlot(char[][] puzzle2) {
+		int[] fp = new int[2];
+		
+		fp[0] = -1;
+		fp[1] = -1;
+		
+		for(int row = 0; row < puzzle2.length; row++) {
+			for (int col = 0; col < puzzle2.length; col++) {
+				if (puzzle2[row][col] == '.') {
+					fp[0] = row;
+					fp[1] = col;
+					return fp;
+				}
+			}
+		}
+		return fp;
+	}
 	
 	// ---------------------------------------------------------------
 	// solve the sudoku automatically
@@ -194,39 +214,36 @@ public class Sudoku {
 		
 		boolean satisfied = false;
 		
-		//traverse each element in each row
-		for (int row = 0; row < 9; row++ ) {
-			System.out.println(" ");
-			for (int col = 0; col < 9; col++) {
-				
-				//if the specified index is empty, solve it.
-//				System.out.print(puzzle[row][col]);
-				if (puzzle[row][col] == '.') {
-					//check each possible number (1-9)
-					for (int num = 1; num <= 9; num++) {
-						
-//						System.out.println("Satisfies: " + satisfies(row, col, num));
-						
-						satisfied = satisfies(row, col, num);
-						if (satisfied) {
-							String stringNum = "" + num;
-							puzzle[row][col] = stringNum.toCharArray()[0];
-							printPuzzle(puzzle);
-							System.out.println(" ");
-//							System.out.println(puzzle[row][col]);
-//							System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
-							break;
-						}
-					}
-					if (!satisfied) {
-						puzzle[row][col] = '-';
-					}
-				}
-			}
+		int[] fp = emptySlot(puzzle);
+		if (fp[0] == -1) {
+			return true;
 		}
 		
-		System.out.println(" ");
-		return true;
+		int row = fp[0];
+		int col = fp[1];
+
+		//check each possible number (1-9)
+		for (int num = 1; num <= 9; num++) {
+//			System.out.println("Satisfies: " + satisfies(row, col, num));
+			satisfied = satisfies(row, col, num);
+			if (satisfied) {
+				String stringNum = Integer.toString(num);
+				puzzle[row][col] = stringNum.toCharArray()[0];
+				boolean check = solve(puzzle);
+				if(check == true) {
+					return true;
+				}
+				puzzle[row][col] = 0;
+				
+//				System.out.println(puzzle[row][col]);
+//				System.out.println("assign puzzle to cur num: " + puzzle[row][col]);
+			}
+		}
+//		if (!satisfied) {
+//			puzzle[row][col] = '-';
+//		}
+//			System.out.println(" ");
+		return false;
 	}
 	
 	// ---------------------------------------------------------------
