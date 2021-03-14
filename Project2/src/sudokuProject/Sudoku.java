@@ -15,13 +15,14 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	private static boolean arrayDupe(char[] dupe) {
 		
+		//double for loop iterates over each element. 
 		for(int j = 0; j < dupe.length; j++) {
 			for(int k = 0; k < dupe.length; k++) {
+				//determine if duplicate is found
 				if(k!=j && (int) dupe[k] == (int) dupe[j]) {
 					if (dupe[j] == '.' && dupe[k] == '.') {
 						continue;
 					}
-//					System.out.println("comparison (j,k): " + "j: " + j + " k: "+ k + " ( " + dupe[j] + " ) ( " + dupe[k] + " )");
 					return true;
 				}
 			}
@@ -35,68 +36,70 @@ public class Sudoku {
 	public static boolean check(char[][] puzzle) {
 		
 		//create boolean array to return whether a duplicate exists in row/column/grid
-		
 		char[] colDupe = new char[9];
 		
-		//row check
+		//check for duplicates in row
 		for(int i = 0; i < puzzle.length-1; i++) {
-			
+			//call arrayDupe to set boolean 
 			boolean duplicate = arrayDupe(puzzle[i]);
-			
+			//if duplicate found, print statement to user
 			if(duplicate) {
 				System.out.println("duplicate found on row: " + i);
 				return false;
 			}
 		}
-	
-		//column check
+		
+		//check for duplicates in column
 		for(int col = 0; col < puzzle.length; col++) {
 			for (int row = 0; row < puzzle.length; row++) {
 				colDupe[row] = puzzle[row][col];	
 			}
+			//call arrayDupe to set boolean 
 			boolean duplicate = arrayDupe(colDupe);
-			
+			//if duplicate found, print statement to user
 			if(duplicate) {
 				System.out.println("duplicate found on col: " + col);
 				return false;
 			}
 		}
 		
-		//3X3 check (one at a time)
+		//Check each 3X3 grid for duplicates
 		for(int gridX = 0; gridX < 7; gridX += 3 ) {
 			for( int gridY = 0; gridY < 7; gridY += 3) {
-				
+				//Initialize char array and counter. 
 				char[] gridDupe = new char[9];
 				int count = 0;
-				
+				//iterate over each element in 3X3 
 				for(int col = gridX; col < (3 + gridX); col++) {
 					for(int row = gridY; row < (3 + gridY); row++) {
 						char curPuzzleIndex = puzzle[row][col];
+						//add value to array and increase count. 
 						gridDupe[count] = curPuzzleIndex;
 						count++;
 					}
 				}
-				
+				//call arrayDupe with array gridDupe 
 				boolean duplicate = arrayDupe(gridDupe);
+				//if found, print and return false
 				if(duplicate) {
 					System.out.println("duplicate found in grid");
 					return false;
 				}
 			}
 		}
+		//if no duplicates, return true
 		return true;	
 	}
 	
-	
 	// ---------------------------------------------------------------
-	// curInRow - checks if specific num is in row
+	// curInRow - checks if specific number is in row
 	// ---------------------------------------------------------------
 	public static boolean curInRow(char[][] puzzle, int row, int cur) {
 
-		String stringCur = Integer.toString(cur);
+		//iterate over each element in given row
 		for(int i=0; i < puzzle.length; i++) {
-			
-			if(puzzle[row][i] ==  stringCur.toCharArray()[0]) {
+			//if duplicate is found return true
+			if(puzzle[row][i] ==  Integer.toString(cur).toCharArray()[0]) {
 				return true;
 			}
 		}
@@ -104,14 +107,14 @@ public class Sudoku {
 	}
 	
 	// ---------------------------------------------------------------
-	// checks if specific num is in colum
+	// curInCol - checks if specific number is in column
 	// ---------------------------------------------------------------
 	public static boolean curInCol(char[][] puzzle, int col, int cur) {
 		
-		String stringCur = Integer.toString(cur);
+		//iterate over each element in column
 		for(int i=0; i < puzzle.length; i++) {
-	
-			if(puzzle[i][col] == stringCur.toCharArray()[0]) {
+			//if duplicate is found return true
+			if(puzzle[i][col] == Integer.toString(cur).toCharArray()[0]) {
 				return true;
 			}
 		}
@@ -119,13 +122,14 @@ public class Sudoku {
 	}
 	
 	// ---------------------------------------------------------------
-	// checks if specific num is in 3X3
+	// curInGrid - checks if specific number is in 3X3
 	// ---------------------------------------------------------------
 	public static boolean curInGrid (char[][] puzzle, int row1, int col1, int cur) {
 		
+		//for each box (begins at first element in box.}
 		for(int row = 0; row < 3; row++) {
 			for(int col = 0; col < 3; col++) {
-				
+				//if a duplicate is found in any element of grid, return true
 				if(puzzle[row + row1][col + col1] == cur) {
 					return true;
 				}
@@ -135,73 +139,76 @@ public class Sudoku {
 	}
 	
 	// ---------------------------------------------------------------
-	// determines if specific number satisfies conditions in index
+	// satisfies - determines if specific number satisfies all conditions for position
 	// ---------------------------------------------------------------
 	public static boolean satisfies(char[][] puzzle, int row, int col, int cur) {
 		
+		//Set three booleans to outputs of check methods for row, column, and 3X3s
 		boolean rowTrue = curInRow(puzzle, row, cur);
 		boolean colTrue = curInCol(puzzle, col, cur);
 		boolean gridTrue =curInGrid(puzzle, row - row % 3, col - col % 3, cur);
 		
+		//return the result of the combined boolean outputs. 
 		return (!colTrue && !rowTrue && !gridTrue);
 		
 	}
 	
 	//---------------------------------------------------------------
-	// return next empty slot in puzzle
+	// emptySlot - return next empty slot in puzzle to be solved
 	//---------------------------------------------------------------
 	public static HashMap<String, Integer> emptySlot(char[][] puzzle) {
 		
+		//Initialize hashmap 
 		HashMap<String, Integer> slot = new HashMap<>();
-		
+		//add initial values to Hashmap 
 		slot.put("row", -1);
 		slot.put("col", -1);
-		
-		
+		//iterate over each element in the puzzle 
 		for(int row = 0; row < puzzle.length; row++) {
 			for (int col = 0; col < puzzle.length; col++) {
+				//if a slot containing a '.' is found, return that index. 
 				if (puzzle[row][col] == '.') {
-					
 					slot.put("row", row);
 					slot.put("col", col);
-					
 					return slot;
-					
 				}
 			}
 		}
+		//otherwise, puzzle is solved. return initial values. 
 		return slot;
 	}
 	
 	// ---------------------------------------------------------------
-	// solve the sudoku automatically
+	// solve - solve the sudoku automatically
 	// ---------------------------------------------------------------
 	public static boolean solve(char[][] puzzle) {
 		
-//		boolean satisfied = false;
+		//initialize hashmap
 		HashMap<String, Integer> slot = emptySlot(puzzle);
+		//if slot returns with initial value of -1, puzzle is solved. 
 		if (slot.get("row") == -1) {
 			return true;
 		}
-		
+		//retrieve values of row and column from hashmap 
 		int row = slot.get("row").intValue();
-		int col = slot.get("col");
+		int col = slot.get("col").intValue();
 
 		//check each possible number (1-9)
 		for (int num = 1; num <= 9; num++) {
-
+			//if num is approved in satisfies, set that index to num.
 			if (satisfies(puzzle, row, col, num)) {
 				puzzle[row][col] = Integer.toString(num).toCharArray()[0];
 				
-				//TEMP FOR TESTING
+				//TEMP FOR TESTING: to see each value as filled
 //				printPuzzle(puzzle); 
-//				System.out.println("-----------------");
-				//TEMP FOR TESTING ^^
+//				System.out.println("--------------------------");
 				
+				//recursion to determine if the num prev set works with next.
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
 				}
+				//if not true, set back to '.' and try next num.
 				puzzle[row][col] = '.';
 			}
 		}
@@ -209,9 +216,11 @@ public class Sudoku {
 	}
 	
 	// ---------------------------------------------------------------
-	// prints puzzle to screen in current state. 
+	// printPuzzle - prints puzzle to screen in current state. 
 	// ---------------------------------------------------------------
 	private static void printPuzzle(char[][] puzzle) {
+		
+		//print entire puzzle to screen 
 		for (int row = 0; row < puzzle.length; row++) {
 			for (int col = 0; col < puzzle.length; col++) {
 				System.out.print(" " + puzzle[row][col] + " ");
@@ -221,18 +230,34 @@ public class Sudoku {
 	}
 	
 	// ---------------------------------------------------------------
-	// main 
+	// main - main method to begin program
 	// ---------------------------------------------------------------
 	public static void main(String[] args) {
 		
+		//manual input array for testing check method (must change "puzzle" below to "falsePuzzle")
+//		char[][] falsePuzzle = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+//                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+//                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+//                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+//                {'4', '.', '.', '8', '.', '3', '.', '.', '.'},
+//                {'7', '.', '.', '.', '2', '.', '.', '.', '.'},
+//                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+//                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+//                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+		
+		//print starting board acquired from SudokuP
 		System.out.println("Starting Board: ");
 		printPuzzle(puzzle);
-		System.out.println();
+		System.out.println("--------------------------");
 		
+		//if check returns true, execute solve and print solution
 		if(check(puzzle)) {
 			solve(puzzle);
 			System.out.println("Solved Puzzle: ");
 			printPuzzle(puzzle);
+		}
+		else {
+			System.out.println("the given sudoky puzzle is invalid");
 		}
 	}
 }
