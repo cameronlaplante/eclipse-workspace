@@ -1,5 +1,7 @@
 package sudokuProject;
 
+import java.util.HashMap;
+
 public class Sudoku {
 	
 	//set length of one side to static variable. 
@@ -9,7 +11,7 @@ public class Sudoku {
 	static char[][] puzzle = SudokuP.puzzle();
 	
 	// ---------------------------------------------------------------
-	// check for duplicates
+	// arrayDupe - check for duplicates in check method
 	// ---------------------------------------------------------------
 	private static boolean arrayDupe(char[] dupe) {
 		
@@ -27,9 +29,8 @@ public class Sudoku {
 		return false;
 	}
 	
-	
 	// ---------------------------------------------------------------
-	// checks validity of entire puzzle in current state (solved or unsolved)
+	// check - check validity of entire puzzle in current state 
 	// ---------------------------------------------------------------
 	public static boolean check(char[][] puzzle) {
 		
@@ -88,7 +89,7 @@ public class Sudoku {
 	
 	
 	// ---------------------------------------------------------------
-	// checks if specific num is in row
+	// curInRow - checks if specific num is in row
 	// ---------------------------------------------------------------
 	public static boolean curInRow(char[][] puzzle, int row, int cur) {
 
@@ -149,22 +150,27 @@ public class Sudoku {
 	//---------------------------------------------------------------
 	// return next empty slot in puzzle
 	//---------------------------------------------------------------
-	public static int[] emptySlot(char[][] puzzle) {
-		int[] fp = new int[2];
+	public static HashMap<String, Integer> emptySlot(char[][] puzzle) {
 		
-		fp[0] = -1;
-		fp[1] = -1;
+		HashMap<String, Integer> slot = new HashMap<>();
+		
+		slot.put("row", -1);
+		slot.put("col", -1);
+		
 		
 		for(int row = 0; row < puzzle.length; row++) {
 			for (int col = 0; col < puzzle.length; col++) {
 				if (puzzle[row][col] == '.') {
-					fp[0] = row;
-					fp[1] = col;
-					return fp;
+					
+					slot.put("row", row);
+					slot.put("col", col);
+					
+					return slot;
+					
 				}
 			}
 		}
-		return fp;
+		return slot;
 	}
 	
 	// ---------------------------------------------------------------
@@ -173,21 +179,19 @@ public class Sudoku {
 	public static boolean solve(char[][] puzzle) {
 		
 //		boolean satisfied = false;
-		int[] fp = emptySlot(puzzle);
-		if (fp[0] == -1) {
+		HashMap<String, Integer> slot = emptySlot(puzzle);
+		if (slot.get("row") == -1) {
 			return true;
 		}
 		
-		int row = fp[0];
-		int col = fp[1];
+		int row = slot.get("row").intValue();
+		int col = slot.get("col");
 
 		//check each possible number (1-9)
 		for (int num = 1; num <= 9; num++) {
 
 			if (satisfies(puzzle, row, col, num)) {
-				String stringNum = Integer.toString(num);
-				
-				puzzle[row][col] = stringNum.toCharArray()[0];
+				puzzle[row][col] = Integer.toString(num).toCharArray()[0];
 				
 				//TEMP FOR TESTING
 //				printPuzzle(puzzle); 
