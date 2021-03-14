@@ -1,11 +1,19 @@
 package sudokuProject;
 
+/* 
+ * Author: Cameron LaPlante 
+ * Course: CS 145 
+ * Assignment: Project 2 
+ * Collaboration statement: By submitting this assignment, I am attesting 
+ * that this homework is in full compliance with the course's Homework 
+ * Collaboration Policy and with all the other relevant academic honesty 
+ * policies of the course and university. I discussed this homework with 
+ * no one and wrote this solution without input from anyone else.
+ */
+
 import java.util.HashMap;
 
 public class Sudoku {
-	
-	//set length of one side to static variable. 
-//	static int length = 9;
 	
 	//generate puzzle to solve
 	static char[][] puzzle = SudokuP.puzzle();
@@ -69,7 +77,7 @@ public class Sudoku {
 				//Initialize char array and counter. 
 				char[] gridDupe = new char[9];
 				int count = 0;
-				//iterate over each element in 3X3 
+				//iterate over each element in current 3X3 
 				for(int col = gridX; col < (3 + gridX); col++) {
 					for(int row = gridY; row < (3 + gridY); row++) {
 						char curPuzzleIndex = puzzle[row][col];
@@ -187,6 +195,9 @@ public class Sudoku {
 		HashMap<String, Integer> slot = emptySlot(puzzle);
 		//if slot returns with initial value of -1, puzzle is solved. 
 		if (slot.get("row") == -1) {
+			//print solution
+			System.out.println("Game Play: \n");
+			printPuzzle(puzzle);
 			return true;
 		}
 		//retrieve values of row and column from hashmap 
@@ -199,11 +210,7 @@ public class Sudoku {
 			if (satisfies(puzzle, row, col, num)) {
 				puzzle[row][col] = Integer.toString(num).toCharArray()[0];
 				
-				//TEMP FOR TESTING: to see each value as filled
-//				printPuzzle(puzzle); 
-//				System.out.println("--------------------------");
-				
-				//recursion to determine if the num prev set works with next.
+				//recursion to determine if the num previous set works with next.
 				boolean check = solve(puzzle);
 				if(check == true) {
 					return true;
@@ -234,30 +241,18 @@ public class Sudoku {
 	// ---------------------------------------------------------------
 	public static void main(String[] args) {
 		
-		//manual input array for testing check method (must change "puzzle" below to "falsePuzzle")
-//		char[][] falsePuzzle = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-//                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-//                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-//                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-//                {'4', '.', '.', '8', '.', '3', '.', '.', '.'},
-//                {'7', '.', '.', '.', '2', '.', '.', '.', '.'},
-//                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-//                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-//                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
-		
 		//print starting board acquired from SudokuP
-		System.out.println("Starting Board: ");
+		System.out.println("Starting Board: \n");
 		printPuzzle(puzzle);
-		System.out.println("--------------------------");
+		System.out.println();
+		System.out.println("-------------------------- \n");
 		
 		//if check returns true, execute solve and print solution
 		if(check(puzzle)) {
 			solve(puzzle);
-			System.out.println("Solved Puzzle: ");
-			printPuzzle(puzzle);
 		}
 		else {
-			System.out.println("the given sudoky puzzle is invalid");
+			System.out.println("the given sudoku puzzle is invalid");
 		}
 	}
 }
