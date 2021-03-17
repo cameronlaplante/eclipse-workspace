@@ -32,7 +32,7 @@ public class ReccomendBook {
   	  keepGoing = sc.nextLine();
 	  }
 	  sc.close();
-	  //if user wants to quit, print message. 
+	  //if user wants to quit, print message. z
 	  if (keepGoing.toLowerCase().equals("n")) {
 	    System.out.println("Goodbye.");
 	  }
@@ -42,21 +42,16 @@ public class ReccomendBook {
 	//questions - take user input for two questions
 	//-------------------------------------------------------
 	public static String questions() {
-//		//initialize scanner
-//	  Scanner sc = new Scanner(System.in);
 	  //ask question 1: 
 	  System.out.println("Which theme are you most interested in reading about? \n"
 			  + "{Autonomy(a), Collectivism vs Individualism(b), or Control(c)} -> (enter 'a', 'b', or 'c')");
 	  String answer1 = sc.nextLine();
 	  //ask question 2: 
-//	  System.out.println("\n"+ dashes);
 	  System.out.println("\nWhich secondary theme are you most interested in? \n"
 	  		  + "{Bureaucracy(x),  Choice of Life vs. Death(y), or Perfection(z)} -> (enter 'x', 'y', or 'z')");
 	  String answer2 = sc.nextLine(); 
 	  //create string of two answers
 	  String combo = answer1 + answer2;
-	  //return string 
-//	  sc.close();
 	  return combo;
 	}
 	
@@ -213,18 +208,14 @@ public class ReccomendBook {
       break;
      default:
        synop = "Error Encountered. Please try again.";
-	  }
-	  
+	  }  
 	  return synop;
-	  
 	}
 	
 	//-------------------------------------------------------
   // print - print recommendation to user
   //-------------------------------------------------------
 	public static void printOutput(String recommendation) {
-	  //print book recommendation
-//	  System.out.println("\n" + dashes);
 	  System.out.println("\nBased on your theme preferences, you would enjoy the book: " + recommendation);
 	  System.out.println();
 	  String blurb = bookSynop(recommendation);
