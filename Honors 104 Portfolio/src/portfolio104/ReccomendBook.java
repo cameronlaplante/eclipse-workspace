@@ -5,7 +5,7 @@ import java.util.*;
 public class ReccomendBook {
 	
   //def var for print dashes
-  static String dashes = repeatChar('-', 95);
+  static String dashes = repeatChar('-', 135);
   
   //initialize scanner
   static Scanner sc = new Scanner(System.in);
@@ -17,7 +17,8 @@ public class ReccomendBook {
 	  //initialize string to determine if program continues
 	  String keepGoing = "";
     //introduce program to user
-    System.out.println("\nThis program recommends recent books based on the theme preferences of the user!");
+    System.out.println("\nThis program provides alternatives to modernist literature for those who still /n"
+        + "want to encounter the themes explored in such texts.");
     System.out.println("\n"+ dashes);
     
 	  //while user wants to continue, execute.
@@ -30,6 +31,7 @@ public class ReccomendBook {
   	  printOutput(book);
   	  System.out.println("Would you like to try again? (y or n)");
   	  keepGoing = sc.nextLine();
+  	  System.out.println();
 	  }
 	  sc.close();
 	  //if user wants to quit, print message. z
@@ -43,11 +45,11 @@ public class ReccomendBook {
 	//-------------------------------------------------------
 	public static String questions() {
 	  //ask question 1: 
-	  System.out.println("Which theme are you most interested in reading about? \n"
+	  System.out.println("What theme would you like to encounter while reading \n"
 			  + "{Autonomy(a), Collectivism vs Individualism(b), or Control(c)} -> (enter 'a', 'b', or 'c')");
 	  String answer1 = sc.nextLine();
 	  //ask question 2: 
-	  System.out.println("\nWhich secondary theme are you most interested in? \n"
+	  System.out.println("\nWhat's a secondary theme you would like to explore? \n"
 	  		  + "{Bureaucracy(x),  Choice of Life vs. Death(y), or Perfection(z)} -> (enter 'x', 'y', or 'z')");
 	  String answer2 = sc.nextLine(); 
 	  //create string of two answers
@@ -62,7 +64,7 @@ public class ReccomendBook {
 		//initialize string
 	  String bookRecommend;
 	  //case statement selects book given userInputs
-	  switch (userPref) {
+	  switch (userPref) { 
 	  case "ax": 
 	    bookRecommend = "The Hunger Games";
 	    break;
@@ -233,5 +235,3 @@ public class ReccomendBook {
 	  return new String(data);
 	}
 }
-
-
